@@ -73,12 +73,52 @@ export namespace IOpenAiSchema {
   /**
    * Array type schema info.
    */
-  export interface IArray extends ILlmSchema.IArray, ISwaggerSchemaPlugin {}
+  export interface IArray
+    extends Omit<ILlmSchema.IArray, "items">,
+      ISwaggerSchemaPlugin {
+    /**
+     * Items type schema info.
+     *
+     * The `items` means the type of the array elements. In other words, it is
+     * the type schema info of the `T` in the TypeScript array type `Array<T>`.
+     */
+    items: IOpenAiSchema;
+  }
 
   /**
    * Object type schema info.
    */
-  export interface IObject extends ILlmSchema.IObject, ISwaggerSchemaPlugin {}
+  export interface IObject
+    extends Omit<ILlmSchema.IObject, "properties" | "additionalProperties">,
+      ISwaggerSchemaPlugin {
+    /**
+     * Properties of the object.
+     *
+     * The `properties` means a list of key-value pairs of the object's
+     * regular properties. The key is the name of the regular property,
+     * and the value is the type schema info.
+     *
+     * If you need additional properties that is represented by dynamic key,
+     * you can use the {@link additionalProperties} instead.
+     */
+    properties?: Record<string, IOpenAiSchema>;
+
+    /**
+     * Additional properties' info.
+     *
+     * The `additionalProperties` means the type schema info of the additional
+     * properties that are not listed in the {@link properties}.
+     *
+     * If the value is `true`, it means that the additional properties are not
+     * restricted. They can be any type. Otherwise, if the value is
+     * {@link ILlmSchema} type, it means that the additional properties must
+     * follow the type schema info.
+     *
+     * - `true`: `Record<string, any>`
+     * - `ILlmSchema`: `Record<string, T>`
+     */
+    additionalProperties?: boolean | IOpenAiSchema;
+  }
 
   /**
    * Unknown type schema info.
@@ -103,5 +143,12 @@ export namespace IOpenAiSchema {
    * defined `anyOf` instead of the `oneOf`, {@link OpenAiComposer} forcibly
    * converts it to `oneOf` type.
    */
-  export interface IOneOf extends ILlmSchema.IOneOf, ISwaggerSchemaPlugin {}
+  export interface IOneOf
+    extends Omit<ILlmSchema.IOneOf, "oneOf">,
+      ISwaggerSchemaPlugin {
+    /**
+     * List of the union types.
+     */
+    oneOf: Exclude<IOpenAiSchema, IOpenAiSchema.IOneOf>[];
+  }
 }
