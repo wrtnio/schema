@@ -44,7 +44,7 @@
     "rimraf": "^6.0.1",
     "rollup": "^4.22.0",
     "ts-patch": "^3.2.1",
-    "typescript": "^5.5.4",
+    "typescript": "5.5.4",
     "typescript-transform-paths": "^3.5.1",
     "typia": "^6.10.2"
   },
