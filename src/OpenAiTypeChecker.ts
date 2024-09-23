@@ -79,6 +79,10 @@ export namespace OpenAiTypeChecker {
     schema: IOpenAiSchema,
   ): schema is IOpenAiSchema.INumber => LlmTypeChecker.isNumber(schema);
 
+  export const isInteger = (
+    schema: IOpenAiSchema,
+  ): schema is IOpenAiSchema.IInteger => LlmTypeChecker.isInteger(schema);
+
   /**
    * Test whether the schema is a string type.
    *
