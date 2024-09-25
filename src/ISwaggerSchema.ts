@@ -132,9 +132,7 @@ export namespace ISwaggerSchema {
    * defined `anyOf` instead of the `oneOf`, {@link OpenApi} forcibly
    * converts it to `oneOf` type.
    */
-  export interface IOneOf
-    extends OpenApi.IJsonSchema.__IAttribute,
-      ISwaggerSchemaPlugin {
+  export interface IOneOf extends Omit<OpenApi.IJsonSchema.IOneOf, "oneOf"> {
     /**
      * List of the union types.
      */
