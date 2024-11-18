@@ -64,6 +64,7 @@ export namespace ISwaggerSchema {
   export interface IInteger
     extends OpenApi.IJsonSchema.IInteger,
       ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.ITargetOrder,
       ISwaggerSchemaPaymentPlugin.IPriceAmount {}
 
   /**
@@ -71,6 +72,7 @@ export namespace ISwaggerSchema {
    */
   export interface INumber
     extends OpenApi.IJsonSchema.INumber,
+      ISwaggerSchemaPaymentPlugin.ITargetOrder,
       ISwaggerSchemaPaymentPlugin.IPriceAmount {}
 
   /**
@@ -79,6 +81,7 @@ export namespace ISwaggerSchema {
   export interface IString
     extends OpenApi.IJsonSchema.IString,
       ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.ITargetOrder,
       ISwaggerSchemaPaymentPlugin.IPriceCurrency,
       ISwaggerSchemaPaymentPlugin.IVendor,
       ISwaggerSchemaSecurityPlugin {}
