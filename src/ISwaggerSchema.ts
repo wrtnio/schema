@@ -1,6 +1,8 @@
 import { OpenApi } from "@samchon/openapi";
 
-import { ISwaggerSchemaPlugin } from "./ISwaggerSchemaPlugin";
+import { ISwaggerSchemaCommonPlugin } from "./ISwaggerSchemaCommonPlugin";
+import { ISwaggerSchemaPaymentPlugin } from "./ISwaggerSchemaPaymentPlugin";
+import { ISwaggerSchemaSecurityPlugin } from "./ISwaggerSchemaSecurityPlugin";
 
 /**
  * Type schema info.
@@ -23,8 +25,8 @@ import { ISwaggerSchemaPlugin } from "./ISwaggerSchemaPlugin";
  *
  * - {@link ISwaggerSchema.IString.x-wrtn-secret-key}
  * - {@link ISwaggerSchema.IString.x-wrtn-secret-scopes}
- * - {@link ISwaggerSchemaPlugin.x-wrtn-placeholder}
- * - {@link ISwaggerSchemaPlugin.x-wrtn-prerequisite}
+ * - {@link ISwaggerSchemaCommonPlugin.x-wrtn-placeholder}
+ * - {@link ISwaggerSchemaCommonPlugin.x-wrtn-prerequisite}
  *
  * @author Samchon
  */
@@ -47,81 +49,67 @@ export namespace ISwaggerSchema {
    */
   export interface IConstant
     extends OpenApi.IJsonSchema.IConstant,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Boolean type info.
    */
   export interface IBoolean
     extends OpenApi.IJsonSchema.IBoolean,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Integer type info.
    */
   export interface IInteger
     extends OpenApi.IJsonSchema.IInteger,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
 
   /**
    * Number (double) type info.
    */
   export interface INumber
     extends OpenApi.IJsonSchema.INumber,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
 
   /**
    * String type info.
    */
   export interface IString
     extends OpenApi.IJsonSchema.IString,
-      ISwaggerSchemaPlugin {
-    /**
-     * Secret key for the schema.
-     *
-     * `x-wrtn-secret-key` is a property means a secret key that is required
-     * for the target API endpoint calling. If the secret key is not filled,
-     * the API call would be failed.
-     */
-    "x-wrtn-secret-key"?: string;
-
-    /**
-     * Secret scopes for the schema.
-     *
-     * `x-wrtn-secret-scopes` is a property means a list of secret scopes that
-     * are required for the target API endpoint calling. If the secret scopes
-     * are not satisfied, the API call would be failed.
-     */
-    "x-wrtn-secret-scopes"?: string[];
-  }
+      ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.IPriceCurrency,
+      ISwaggerSchemaPaymentPlugin.IVendor,
+      ISwaggerSchemaSecurityPlugin {}
 
   /**
    * Array type info.
    */
   export interface IArray
     extends OpenApi.IJsonSchema.IArray<ISwaggerSchema>,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Tuple type info.
    */
   export interface ITuple
     extends OpenApi.IJsonSchema.ITuple<ISwaggerSchema>,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Object type info.
    */
   export interface IObject
     extends OpenApi.IJsonSchema.IObject<ISwaggerSchema>,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Reference type directing named schema.
    */
   export interface IReference<Key = string>
     extends OpenApi.IJsonSchema.IReference<Key>,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Union type.
@@ -134,7 +122,7 @@ export namespace ISwaggerSchema {
    */
   export interface IOneOf
     extends Omit<OpenApi.IJsonSchema.IOneOf, "oneOf">,
-      ISwaggerSchemaPlugin {
+      ISwaggerSchemaCommonPlugin {
     /**
      * List of the union types.
      */
@@ -146,12 +134,12 @@ export namespace ISwaggerSchema {
    */
   export interface INull
     extends OpenApi.IJsonSchema.INull,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Unknown, `any` type.
    */
   export interface IUnknown
     extends OpenApi.IJsonSchema.IUnknown,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 }

@@ -3,7 +3,7 @@
  *
  * @author Samchon
  */
-export interface ISwaggerSchemaPlugin {
+export interface ISwaggerSchemaCommonPlugin {
   /**
    * Placeholder value for frontend application.
    *
@@ -22,9 +22,9 @@ export interface ISwaggerSchemaPlugin {
    *
    * @reference https://github.com/wrtnio/decorators/blob/main/src/Prerequisite.ts
    */
-  "x-wrtn-prerequisite"?: ISwaggerSchemaPlugin.IPrerequisite;
+  "x-wrtn-prerequisite"?: ISwaggerSchemaCommonPlugin.IPrerequisite;
 }
-export namespace ISwaggerSchemaPlugin {
+export namespace ISwaggerSchemaCommonPlugin {
   /**
    * Prerequisite API endpoint with accessors.
    */

@@ -1,6 +1,8 @@
 import { ILlmSchema } from "@samchon/openapi";
 
-import { ISwaggerSchemaPlugin } from "./ISwaggerSchemaPlugin";
+import { ISwaggerSchemaCommonPlugin } from "./ISwaggerSchemaCommonPlugin";
+import { ISwaggerSchemaPaymentPlugin } from "./ISwaggerSchemaPaymentPlugin";
+import { ISwaggerSchemaSecurityPlugin } from "./ISwaggerSchemaSecurityPlugin";
 
 /**
  * Type schema info of OpenAI (LLM) function call.
@@ -35,47 +37,42 @@ export namespace IOpenAiSchema {
   /**
    * Boolean type schema info.
    */
-  export interface IBoolean extends ILlmSchema.IBoolean, ISwaggerSchemaPlugin {}
+  export interface IBoolean
+    extends ILlmSchema.IBoolean,
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Integer type schema info.
    */
-  export interface IInteger extends ILlmSchema.IInteger, ISwaggerSchemaPlugin {}
+  export interface IInteger
+    extends ILlmSchema.IInteger,
+      ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
 
   /**
    * Number type schema info.
    */
-  export interface INumber extends ILlmSchema.INumber, ISwaggerSchemaPlugin {}
+  export interface INumber
+    extends ILlmSchema.INumber,
+      ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
 
   /**
    * String type schema info.
    */
-  export interface IString extends ILlmSchema.IString, ISwaggerSchemaPlugin {
-    /**
-     * Secret key for the schema.
-     *
-     * `x-wrtn-secret-key` is a property means a secret key that is required
-     * for the target API endpoint calling. If the secret key is not filled,
-     * the API call would be failed.
-     */
-    "x-wrtn-secret-key"?: string;
-
-    /**
-     * Secret scopes for the schema.
-     *
-     * `x-wrtn-secret-scopes` is a property means a list of secret scopes that
-     * are required for the target API endpoint calling. If the secret scopes
-     * are not satisfied, the API call would be failed.
-     */
-    "x-wrtn-secret-scopes"?: string[];
-  }
+  export interface IString
+    extends ILlmSchema.IString,
+      ISwaggerSchemaCommonPlugin,
+      ISwaggerSchemaPaymentPlugin.IPriceCurrency,
+      ISwaggerSchemaPaymentPlugin.IVendor,
+      ISwaggerSchemaSecurityPlugin {}
 
   /**
    * Array type schema info.
    */
   export interface IArray
     extends Omit<ILlmSchema.IArray, "items">,
-      ISwaggerSchemaPlugin {
+      ISwaggerSchemaCommonPlugin {
     /**
      * Items type schema info.
      *
@@ -90,7 +87,7 @@ export namespace IOpenAiSchema {
    */
   export interface IObject
     extends Omit<ILlmSchema.IObject, "properties" | "additionalProperties">,
-      ISwaggerSchemaPlugin {
+      ISwaggerSchemaCommonPlugin {
     /**
      * Properties of the object.
      *
@@ -125,14 +122,16 @@ export namespace IOpenAiSchema {
    *
    * It means the type of the value is `any`.
    */
-  export interface IUnknown extends ILlmSchema.IUnknown, ISwaggerSchemaPlugin {}
+  export interface IUnknown
+    extends ILlmSchema.IUnknown,
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * Null only type schema info.
    */
   export interface INullOnly
     extends ILlmSchema.INullOnly,
-      ISwaggerSchemaPlugin {}
+      ISwaggerSchemaCommonPlugin {}
 
   /**
    * One of type schema info.
@@ -145,7 +144,7 @@ export namespace IOpenAiSchema {
    */
   export interface IOneOf
     extends Omit<ILlmSchema.IOneOf, "oneOf">,
-      ISwaggerSchemaPlugin {
+      ISwaggerSchemaCommonPlugin {
     /**
      * List of the union types.
      */
