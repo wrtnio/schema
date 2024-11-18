@@ -5,6 +5,27 @@
  */
 export namespace ISwaggerSchemaPaymentPlugin {
   /**
+   * Target of the payment.
+   */
+  export interface ITargetOrder {
+    /**
+     * The payment target.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-target` property, the value means the identifier
+     * of the payment target, as an order.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the target order's ID. Note that, this
+     * `x-wrtn-payment-order-id` is different with the
+     * {@link IVendor.x-wrtn-payment-uid}, which means the transation ID
+     * issued by the payment vendor service. In other words,
+     * `x-wrtn-payment-order-id` is issued by the target API function.
+     */
+    "x-wrtn-payment-order-id"?: string;
+  }
+
+  /**
    * Price amount plugin property.
    */
   export interface IPriceAmount {
