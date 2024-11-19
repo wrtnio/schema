@@ -47,8 +47,7 @@ export namespace IOpenAiSchema {
   export interface IInteger
     extends ILlmSchema.IInteger,
       ISwaggerSchemaCommonPlugin,
-      ISwaggerSchemaPaymentPlugin.ITargetOrder,
-      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
+      ISwaggerSchemaPaymentPlugin.INumeric {}
 
   /**
    * Number type schema info.
@@ -56,8 +55,7 @@ export namespace IOpenAiSchema {
   export interface INumber
     extends ILlmSchema.INumber,
       ISwaggerSchemaCommonPlugin,
-      ISwaggerSchemaPaymentPlugin.ITargetOrder,
-      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
+      ISwaggerSchemaPaymentPlugin.INumeric {}
 
   /**
    * String type schema info.
@@ -65,9 +63,7 @@ export namespace IOpenAiSchema {
   export interface IString
     extends ILlmSchema.IString,
       ISwaggerSchemaCommonPlugin,
-      ISwaggerSchemaPaymentPlugin.ITargetOrder,
-      ISwaggerSchemaPaymentPlugin.IPriceCurrency,
-      ISwaggerSchemaPaymentPlugin.IVendor,
+      ISwaggerSchemaPaymentPlugin.IString,
       ISwaggerSchemaSecurityPlugin {}
 
   /**
