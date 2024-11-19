@@ -5,9 +5,9 @@
  */
 export namespace ISwaggerSchemaPaymentPlugin {
   /**
-   * Target of the payment.
+   * Plugin properties for `integer` and `number` types.
    */
-  export interface ITargetOrder {
+  export interface INumeric {
     /**
      * The payment target.
      *
@@ -22,32 +22,8 @@ export namespace ISwaggerSchemaPaymentPlugin {
      * issued by the payment vendor service. In other words,
      * `x-wrtn-payment-order-id` is issued by the target API function.
      */
-    "x-wrtn-payment-order-id"?: string;
-  }
+    "x-wrtn-payment-order-id"?: true;
 
-  /**
-   * Price amount plugin property.
-   */
-  export interface IPriceAmount {
-    /**
-     * The currency of the payment should be paid.
-     *
-     * If an order appliance function be called and it returns a value with
-     * `x-wrtn-payment-currency` property, the value means the currency of the
-     * payment should be paid at the next publishing plan.
-     *
-     * The payment would be proceeded by the payment vendor service, and you
-     * may fill the next payment function's parameter with the vendor service
-     * code and UID of the payment transaction that is signified by the
-     * `x-wrtn-payment-vendor` and `x-wrtn-payment-uid` typed properties.
-     */
-    "x-wrtn-payment-currency"?: true;
-  }
-
-  /**
-   * Price currency plugin property.
-   */
-  export interface IPriceCurrency {
     /**
      * The amount of the payment should be paid.
      *
@@ -64,9 +40,23 @@ export namespace ISwaggerSchemaPaymentPlugin {
   }
 
   /**
-   * Vendor plugin properties.
+   * Plugin properties for the `string` type.
    */
-  export interface IVendor {
+  export interface IString {
+    /**
+     * The currency of the payment should be paid.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-currency` property, the value means the currency of the
+     * payment should be paid at the next publishing plan.
+     *
+     * The payment would be proceeded by the payment vendor service, and you
+     * may fill the next payment function's parameter with the vendor service
+     * code and UID of the payment transaction that is signified by the
+     * `x-wrtn-payment-vendor` and `x-wrtn-payment-uid` typed properties.
+     */
+    "x-wrtn-payment-currency"?: true;
+
     /**
      * Code of the payment vendor service.
      *
@@ -98,5 +88,62 @@ export namespace ISwaggerSchemaPaymentPlugin {
      * {@link x-wrtn-payment-vendor} typed property.
      */
     "x-wrtn-payment-uid"?: true;
+
+    /**
+     * The payment target's order ID.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-target` property, the value means the identifier
+     * of the payment target, as an order.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the target order's ID. Note that, this
+     * `x-wrtn-payment-order-id` is different with the
+     * {@link IVendor.x-wrtn-payment-uid}, which means the transation ID
+     * issued by the payment vendor service. In other words,
+     * `x-wrtn-payment-order-id` is issued by the target API function.
+     */
+    "x-wrtn-payment-order-id"?: true;
+
+    /**
+     * The payment target's order name.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-order-name` property, the value means the name of the
+     * payment target, as an order.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the target order's name.
+     *
+     * Note that, this `x-wrtn-payment-order-name` is different with the
+     * {@link IVendor.x-wrtn-payment-order-citizen}. This is not the name
+     * or citizen, but of the target order.
+     */
+    "x-wrtn-payment-order-name"?: true;
+
+    /**
+     * The citizen who've ordered the payment.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-order-citizen` property, the value means the citizen
+     * who've ordered the payment.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the citizen who've ordered the payment.
+     */
+    "x-wrtn-payment-order-citizen"?: true;
+
+    /**
+     * The mobile phone number of the citizen who've ordered the payment.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-order-mobile` property, the value means the mobile
+     * phone number of the citizen who've ordered the payment.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the mobile phone number of the citizen
+     * who've ordered the payment.
+     */
+    "x-wrtn-payment-order-mobile"?: true;
   }
 }

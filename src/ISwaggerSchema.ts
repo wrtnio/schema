@@ -64,16 +64,14 @@ export namespace ISwaggerSchema {
   export interface IInteger
     extends OpenApi.IJsonSchema.IInteger,
       ISwaggerSchemaCommonPlugin,
-      ISwaggerSchemaPaymentPlugin.ITargetOrder,
-      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
+      ISwaggerSchemaPaymentPlugin.INumeric {}
 
   /**
    * Number (double) type info.
    */
   export interface INumber
     extends OpenApi.IJsonSchema.INumber,
-      ISwaggerSchemaPaymentPlugin.ITargetOrder,
-      ISwaggerSchemaPaymentPlugin.IPriceAmount {}
+      ISwaggerSchemaPaymentPlugin.INumeric {}
 
   /**
    * String type info.
@@ -81,9 +79,7 @@ export namespace ISwaggerSchema {
   export interface IString
     extends OpenApi.IJsonSchema.IString,
       ISwaggerSchemaCommonPlugin,
-      ISwaggerSchemaPaymentPlugin.ITargetOrder,
-      ISwaggerSchemaPaymentPlugin.IPriceCurrency,
-      ISwaggerSchemaPaymentPlugin.IVendor,
+      ISwaggerSchemaPaymentPlugin.IString,
       ISwaggerSchemaSecurityPlugin {}
 
   /**
