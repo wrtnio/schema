@@ -25,6 +25,18 @@ export namespace ISwaggerSchemaPaymentPlugin {
     "x-wrtn-payment-order-id"?: true;
 
     /**
+     * The citizen ID who've ordered the payment.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-citizen-id` property, the value means the citizen
+     * ID who've ordered the payment.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the citizen ID who've ordered the payment.
+     */
+    "x-wrtn-payment-citizen-id"?: true;
+
+    /**
      * The amount of the payment should be paid.
      *
      * If an order appliance function be called and it returns a value with
@@ -116,34 +128,46 @@ export namespace ISwaggerSchemaPaymentPlugin {
      * function's parameter with the target order's name.
      *
      * Note that, this `x-wrtn-payment-order-name` is different with the
-     * {@link IVendor.x-wrtn-payment-order-citizen}. This is not the name
+     * {@link IVendor.x-wrtn-payment-citizen-name}. This is not the name
      * or citizen, but of the target order.
      */
     "x-wrtn-payment-order-name"?: true;
 
     /**
-     * The citizen who've ordered the payment.
+     * The citizen ID who've ordered the payment.
      *
      * If an order appliance function be called and it returns a value with
-     * `x-wrtn-payment-order-citizen` property, the value means the citizen
-     * who've ordered the payment.
+     * `x-wrtn-payment-citizen-id` property, the value means the citizen
+     * ID who've ordered the payment.
      *
      * When processing the publish, you have to fill the next payment
-     * function's parameter with the citizen who've ordered the payment.
+     * function's parameter with the citizen ID who've ordered the payment.
      */
-    "x-wrtn-payment-order-citizen"?: true;
+    "x-wrtn-payment-citizen-id"?: true;
+
+    /**
+     * The citizen name who've ordered the payment.
+     *
+     * If an order appliance function be called and it returns a value with
+     * `x-wrtn-payment-citizen-name` property, the value means the citizen
+     * name who've ordered the payment.
+     *
+     * When processing the publish, you have to fill the next payment
+     * function's parameter with the citizen name who've ordered the payment.
+     */
+    "x-wrtn-payment-citizen-name"?: true;
 
     /**
      * The mobile phone number of the citizen who've ordered the payment.
      *
      * If an order appliance function be called and it returns a value with
-     * `x-wrtn-payment-order-mobile` property, the value means the mobile
+     * `x-wrtn-payment-citizen-mobile` property, the value means the mobile
      * phone number of the citizen who've ordered the payment.
      *
      * When processing the publish, you have to fill the next payment
      * function's parameter with the mobile phone number of the citizen
      * who've ordered the payment.
      */
-    "x-wrtn-payment-order-mobile"?: true;
+    "x-wrtn-payment-citizen-mobile"?: true;
   }
 }
