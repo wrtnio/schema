@@ -8,13 +8,11 @@ export import IOpenAiSchema = ILlmSchemaV3;
 
 declare module "@samchon/openapi" {
   export namespace ILlmSchemaV3 {
-    export namespace IJsonSchema {
-      export interface IInteger extends ISwaggerSchemaPaymentPlugin.INumeric {}
-      export interface INumber extends ISwaggerSchemaPaymentPlugin.INumeric {}
-      export interface IString
-        extends ISwaggerSchemaPaymentPlugin.IString,
-          ISwaggerSchemaSecurityPlugin {}
-      export interface __IAttribute extends ISwaggerSchemaCommonPlugin {}
-    }
+    export interface IInteger extends ISwaggerSchemaPaymentPlugin.INumeric {}
+    export interface INumber extends ISwaggerSchemaPaymentPlugin.INumeric {}
+    export interface IString
+      extends ISwaggerSchemaPaymentPlugin.IString,
+        ISwaggerSchemaSecurityPlugin {}
+    export interface __IAttribute extends ISwaggerSchemaCommonPlugin {}
   }
 }
