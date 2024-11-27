@@ -23,11 +23,9 @@ const application: IHttpOpenAiApplication = HttpLlm.application(document);
 
 Kind                                                                                       | `@wrtnio/schema`             | `@samchon/openapi`
 -------------------------------------------------------------------------------------------|------------------------------|---------------------------
-[**HTTP LLM Application**](https://wrtn.ai/studio-pro/tech-specs/meta/schema/#application) | **`IHttpOpenAiApplication`** | **`IHttpLlmApplication`**
-[HTTP LLM Function Schema](https://wrtn.ai/studio-pro/tech-specs/meta/schema/#function)    | `IHttpOpenAiFunction`        | `IHttpLlmFunction`
-[LLM Type Schema](https://wrtn.ai/studio-pro/tech-specs/meta/schema/#schema)               | `IOpenAiSchema`              | `ILlmSchema`
-[LLM Function Schema](https://typia.io/docs/llm/application/)                              | `IOpenAiFunction`            | `ILlmFunction`
-[LLM Application](https://typia.io/docs/llm/application/)                                  | `IOpenAiApplication`         | `ILlmApplication`
+[**HTTP LLM Application**](https://wrtn.ai/studio-pro/tech-specs/meta/schema/#application) | **`IHttpOpenAiApplication`** | **`IHttpLlmApplication<"3.0">`**
+[HTTP LLM Function Schema](https://wrtn.ai/studio-pro/tech-specs/meta/schema/#function)    | `IHttpOpenAiFunction`        | `IHttpLlmFunction<3.0">`
+[LLM Type Schema](https://wrtn.ai/studio-pro/tech-specs/meta/schema/#schema)               | `IOpenAiSchema`              | `ILlmSchema<"3.0">`
 [**OpenAPI Document**](https://wrtn.ai/studio-pro/tech-specs/openapi/document/#document)   | **`ISwagger`**               | **`OpenApi.IDocument`**
 [Server URL Address](https://wrtn.ai/studio-pro/tech-specs/openapi/document/#server)       | `ISwaggerServer`             | `OpenApi.IServer`
 [API Operation](https://wrtn.ai/studio-pro/tech-specs/openapi/document/#operation)         | `ISwaggerOperation`          | `OpenApi.IOperation`

@@ -1,7 +1,9 @@
 import { OpenApi, OpenApiV3_1 } from "@samchon/openapi";
 
 import { ISwaggerOperation } from "./ISwaggerOperation";
+import "./ISwaggerOperation";
 import { ISwaggerSchema } from "./ISwaggerSchema";
+import "./ISwaggerSchema";
 
 /**
  * Swagger Document.
@@ -35,4 +37,4 @@ import { ISwaggerSchema } from "./ISwaggerSchema";
  *
  * @author Samchon
  */
-export type ISwagger = OpenApi.IDocument<ISwaggerSchema, ISwaggerOperation>;
+export import ISwagger = OpenApi.IDocument;

@@ -1,11 +1,9 @@
 // LLM TYPES
 export * from "./IHttpOpenAiApplication";
 export * from "./IHttpOpenAiFunction";
-export * from "./IOpenAiApplication";
-export * from "./IOpenAiFunction";
-
 export * from "./IOpenAiSchema";
 export * from "./OpenAiTypeChecker";
+export * from "./HttpOpenAi";
 
 // OPENAPI TYPES
 export * from "./ISwagger";

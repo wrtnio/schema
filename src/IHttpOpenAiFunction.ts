@@ -1,7 +1,6 @@
 import { IHttpLlmFunction } from "@samchon/openapi";
 
 import { IOpenAiSchema } from "./IOpenAiSchema";
-import { ISwaggerMigrateRoute } from "./ISwaggerMigrateRoute";
 import { ISwaggerOperation } from "./ISwaggerOperation";
 
 /**
@@ -54,22 +53,95 @@ import { ISwaggerOperation } from "./ISwaggerOperation";
  * ```
  *
  * @reference https://platform.openai.com/docs/guides/function-calling
+ * @deprecated OpenAI's JSON schema specification has been changed
  * @author Samchon
  */
-export type IHttpOpenAiFunction = IHttpLlmFunction<
-  IOpenAiSchema,
-  ISwaggerOperation,
-  ISwaggerMigrateRoute
->;
+export interface IHttpOpenAiFunction
+  extends Omit<IHttpLlmFunction<"3.0">, "parameters" | "separated"> {
+  /**
+   * List of parameter types.
+   *
+   * If you've configured {@link IHttpLlmApplication.IOptions.keyword} as `true`,
+   * number of {@link IHttpLlmFunction.parameters} are always 1 and the first
+   * parameter's type is always {@link ILlmSchema.IObject}. The
+   * properties' rule is:
+   *
+   * - `pathParameters`: Path parameters of {@link IHttpMigrateRoute.parameters}
+   * - `query`: Query parameter of {@link IHttpMigrateRoute.query}
+   * - `body`: Body parameter of {@link IHttpMigrateRoute.body}
+   *
+   * ```typescript
+   * {
+   *   ...pathParameters,
+   *   query,
+   *   body,
+   * }
+   * ```
+   *
+   * Otherwise, the parameters would be multiple, and the sequence of the
+   * parameters are following below rules:
+   *
+   * ```typescript
+   * [
+   *   ...pathParameters,
+   *   ...(query ? [query] : []),
+   *   ...(body ? [body] : []),
+   * ]
+   * ```
+   */
+  parameters: IOpenAiSchema[];
+
+  /**
+   * The keyworded parameters.
+   */
+  keyword: IOpenAiSchema.IParameters;
+
+  /**
+   * Collection of separated parameters.
+   *
+   * Filled only when {@link IHttpLlmApplication.IOptions.separate} is configured.
+   */
+  separated?: IHttpOpenAiFunction.ISeparated;
+}
 export namespace IHttpOpenAiFunction {
+  export interface IOptions extends IOpenAiSchema.IConfig {
+    separate: null | ((schema: IOpenAiSchema) => boolean);
+  }
+
   /**
    * Collection of separated parameters.
    */
-  export type ISeparated = IHttpLlmFunction.ISeparated<IOpenAiSchema>;
+  export interface ISeparated {
+    /**
+     * Parameters that would be composed by the LLM.
+     */
+    llm: ISeparatedParameter[];
+
+    /**
+     * Parameters that would be composed by the human.
+     */
+    human: ISeparatedParameter[];
+
+    /**
+     * The keyworded parameters' separation.
+     */
+    keyword: IHttpLlmFunction.ISeparated<IOpenAiSchema.IParameters>;
+  }
 
   /**
    * Separated parameter.
    */
-  export type ISeparatedParameter =
-    IHttpLlmFunction.ISeparatedParameter<IOpenAiSchema>;
+  export interface ISeparatedParameter {
+    /**
+     * Index of the parameter.
+     *
+     * @type uint
+     */
+    index: number;
+
+    /**
+     * Type schema info of the parameter.
+     */
+    schema: IOpenAiSchema;
+  }
 }
