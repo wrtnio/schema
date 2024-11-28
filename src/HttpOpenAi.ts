@@ -3,15 +3,22 @@ import {
   IHttpConnection,
   IHttpLlmApplication,
   IHttpLlmFunction,
+  IHttpResponse,
 } from "@samchon/openapi";
+import { LlmSchemaConverter } from "@samchon/openapi/lib/converters/LlmSchemaConverter";
 
 import { IHttpOpenAiApplication } from "./IHttpOpenAiApplication";
 import { IHttpOpenAiFunction } from "./IHttpOpenAiFunction";
+import { IOpenAiSchema } from "./IOpenAiSchema";
 import { ISwagger } from "./ISwagger";
+import { ISwaggerComponents } from "./ISwaggerComponents";
+import { ISwaggerSchema } from "./ISwaggerSchema";
+import { HttpOpenAiFetcher } from "./internal/HttpOpenAiFetcher";
+import { HttpOpenAiSeparator } from "./internal/HttpOpenAiSeparator";
 
 export namespace HttpOpenAi {
   /* -----------------------------------------------------------
-    APPLICATION
+    COMPOSERS
   ----------------------------------------------------------- */
   export const application = (props: {
     document: ISwagger;
@@ -27,6 +34,16 @@ export namespace HttpOpenAi {
       functions: app.functions.map(functional),
     };
   };
+
+  export const schema = (props: {
+    components: ISwaggerComponents;
+    schema: ISwaggerSchema;
+  }): IOpenAiSchema | null =>
+    LlmSchemaConverter.schema("3.0")({
+      config: LlmSchemaConverter.defaultConfig("3.0"),
+      components: props.components,
+      schema: props.schema,
+    });
 
   const functional = (
     keyword: IHttpLlmFunction<"3.0">,
@@ -68,38 +85,32 @@ export namespace HttpOpenAi {
     arguments: unknown[];
   }
 
-  export const execute = async (props: IFetchProps): Promise<unknown> =>
-    HttpLlm.execute(getProps(props));
+  export const execute = (props: IFetchProps): Promise<unknown> =>
+    HttpOpenAiFetcher.execute(props);
 
-  export const propagate = async (props: IFetchProps): Promise<unknown> =>
-    HttpLlm.propagate(getProps(props));
-
-  const getProps = (props: IFetchProps): HttpLlm.IFetchProps<"3.0"> => {
-    const keys: string[] = Object.keys(props.function.keyword.properties);
-    const input: Record<string, unknown> = Object.fromEntries(
-      props.arguments.map((arg, i) => [keys[i], arg]),
-    );
-    return {
-      connection: props.connection,
-      application: {
-        ...props.application,
-        functions: [],
-      },
-      function: {
-        ...props.function,
-        parameters: props.function.keyword,
-        separated: props.function.separated?.keyword,
-      },
-      input,
-    };
-  };
+  export const propagate = (props: IFetchProps): Promise<IHttpResponse> =>
+    HttpOpenAiFetcher.propagate(props);
 
   /* -----------------------------------------------------------
     MERGERS
   ----------------------------------------------------------- */
+  /**
+   * Properties of {@link mergeParameters} function.
+   */
   export interface IMergeProps {
+    /**
+     * Target function to call.
+     */
     function: IHttpOpenAiFunction;
+
+    /**
+     * Arguments composed by LLM (Large Language Model).
+     */
     llm: unknown[];
+
+    /**
+     * Arguments composed by human.
+     */
     human: unknown[];
   }
 
@@ -135,4 +146,21 @@ export namespace HttpOpenAi {
     for (const [k, v] of Object.entries(y)) output[k] = mergeValue(x[k], v);
     return output;
   };
+
+  /* -----------------------------------------------------------
+    SEPARATORS
+  ----------------------------------------------------------- */
+  export interface ISeparateProps {
+    parameters: IOpenAiSchema[];
+    predicator: (schema: IOpenAiSchema) => boolean;
+  }
+
+  export const separateParameters = (
+    props: ISeparateProps,
+  ): IHttpOpenAiFunction.ISeparated => HttpOpenAiSeparator.parameters(props);
+
+  export const separateSchema =
+    (predicator: (schema: IOpenAiSchema) => boolean) =>
+    (input: IOpenAiSchema): [IOpenAiSchema | null, IOpenAiSchema | null] =>
+      HttpOpenAiSeparator.schema(predicator)(input);
 }

@@ -55,13 +55,13 @@ import { ISwaggerOperation } from "./ISwaggerOperation";
  *
  * For reference, the actual function call execution is not by LLM, but by you.
  * When the LLM selects the proper function and fills the arguments, you just call
- * the function by {@link HttpLlm.execute} with the LLM prepared arguments. And then
+ * the function by {@link HttpOpenAi.execute} with the LLM prepared arguments. And then
  * informs the return value to the LLM by system prompt. The LLM will continue the next
  * conversation based on the return value.
  *
  * Additionally, if you've configured {@link IHttpOpenAiApplication.IOptions.separate},
  * so that the parameters are separated to Human and LLM sides, you can merge these
- * humand and LLM sides' parameters into one through {@link HttpLlm.mergeParameters}
+ * humand and LLM sides' parameters into one through {@link HttpOpenAi.mergeParameters}
  * before the actual LLM function call execution.
  *
  * @reference https://platform.openai.com/docs/guides/function-calling

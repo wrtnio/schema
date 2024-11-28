@@ -61,9 +61,9 @@ export interface IHttpOpenAiFunction
   /**
    * List of parameter types.
    *
-   * If you've configured {@link IHttpLlmApplication.IOptions.keyword} as `true`,
-   * number of {@link IHttpLlmFunction.parameters} are always 1 and the first
-   * parameter's type is always {@link ILlmSchema.IObject}. The
+   * If you've configured {@link IHttpOpenAiApplication.IOptions.keyword} as
+   * `true`, number of {@link IHttpOpenAiFunction.parameters} are always 1 and
+   * the first parameter's type is always {@link IOpenAiSchema.IObject}. The
    * properties' rule is:
    *
    * - `pathParameters`: Path parameters of {@link IHttpMigrateRoute.parameters}
@@ -94,12 +94,12 @@ export interface IHttpOpenAiFunction
   /**
    * The keyworded parameters.
    */
-  keyword: IOpenAiSchema.IParameters;
+  keyword?: IOpenAiSchema.IParameters;
 
   /**
    * Collection of separated parameters.
    *
-   * Filled only when {@link IHttpLlmApplication.IOptions.separate} is configured.
+   * Filled only when {@link IHttpOpenAiApplication.IOptions.separate} is configured.
    */
   separated?: IHttpOpenAiFunction.ISeparated;
 }
@@ -125,7 +125,7 @@ export namespace IHttpOpenAiFunction {
     /**
      * The keyworded parameters' separation.
      */
-    keyword: IHttpLlmFunction.ISeparated<IOpenAiSchema.IParameters>;
+    keyword?: IHttpLlmFunction.ISeparated<IOpenAiSchema.IParameters>;
   }
 
   /**
