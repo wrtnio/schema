@@ -5,7 +5,7 @@ import {
   IHttpLlmFunction,
   IHttpResponse,
 } from "@samchon/openapi";
-import { LlmSchemaConverter } from "@samchon/openapi/lib/converters/LlmSchemaConverter";
+import { LlmSchemaComposer } from "@samchon/openapi/lib/composers/LlmSchemaComposer";
 
 import { IHttpOpenAiApplication } from "./IHttpOpenAiApplication";
 import { IHttpOpenAiFunction } from "./IHttpOpenAiFunction";
@@ -38,12 +38,14 @@ export namespace HttpOpenAi {
   export const schema = (props: {
     components: ISwaggerComponents;
     schema: ISwaggerSchema;
-  }): IOpenAiSchema | null =>
-    LlmSchemaConverter.schema("3.0")({
-      config: LlmSchemaConverter.defaultConfig("3.0"),
+  }): IOpenAiSchema | null => {
+    const result = LlmSchemaComposer.schema("3.0")({
+      config: LlmSchemaComposer.defaultConfig("3.0"),
       components: props.components,
       schema: props.schema,
     });
+    return result.success ? result.value : null;
+  };
 
   const functional = (
     keyword: IHttpLlmFunction<"3.0">,

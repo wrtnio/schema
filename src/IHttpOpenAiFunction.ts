@@ -125,7 +125,7 @@ export namespace IHttpOpenAiFunction {
     /**
      * The keyworded parameters' separation.
      */
-    keyword?: IHttpLlmFunction.ISeparated<IOpenAiSchema.IParameters>;
+    keyword?: IHttpLlmFunction.ISeparated<"3.0">;
   }
 
   /**
