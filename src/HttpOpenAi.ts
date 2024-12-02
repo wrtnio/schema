@@ -32,6 +32,7 @@ export namespace HttpOpenAi {
     return {
       ...app,
       functions: app.functions.map(functional),
+      openapi: "3.0.3",
     };
   };
 

@@ -1,6 +1,6 @@
 {
   "name": "@wrtnio/schema",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "JSON and LLM function calling schemas extended for Wrtn Studio Pro",
   "main": "lib/index.js",
   "module": "./lib/index.mjs",

@@ -79,6 +79,13 @@ export interface IHttpOpenAiApplication
    * you can do it through {@link HttpOpenAi.execute} function.
    */
   functions: IHttpOpenAiFunction[];
+
+  /**
+   * Version of OpenAPI.
+   *
+   * OpenAI function call schemas are based on OpenAPI 3.0.3.
+   */
+  openapi: "3.0.3";
 }
 export namespace IHttpOpenAiApplication {
   /**
