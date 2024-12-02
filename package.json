@@ -1,6 +1,6 @@
 {
   "name": "@wrtnio/schema",
-  "version": "2.0.0-dev.20241128",
+  "version": "2.0.0",
   "description": "JSON and LLM function calling schemas extended for Wrtn Studio Pro",
   "main": "lib/index.js",
   "module": "./lib/index.mjs",
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/wrtnio/schema#readme",
   "dependencies": {
-    "@samchon/openapi": "^2.0.0-dev.20241202-2"
+    "@samchon/openapi": "^2.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
@@ -41,7 +41,7 @@
     "ts-patch": "^3.2.1",
     "typescript": "5.5.4",
     "typescript-transform-paths": "^3.5.1",
-    "typia": "^7.0.0-dev.20241202"
+    "typia": "^7.0.0"
   },
   "files": [
     "lib",
