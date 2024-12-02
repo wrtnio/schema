@@ -1,6 +1,6 @@
 import { OpenApi } from "@samchon/openapi";
 
-import { ISwaggerSchema } from "./ISwaggerSchema";
+import "./ISwaggerSchema";
 
 /**
  * Reusable components in Swagger.
@@ -11,4 +11,4 @@ import { ISwaggerSchema } from "./ISwaggerSchema";
  *
  * @author Samchon
  */
-export type ISwaggerComponents = OpenApi.IComponents<ISwaggerSchema>;
+export import ISwaggerComponents = OpenApi.IComponents;
