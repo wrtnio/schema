@@ -57,7 +57,7 @@ import { ISwaggerOperation } from "./ISwaggerOperation";
  * @author Samchon
  */
 export interface IHttpOpenAiFunction
-  extends Omit<IHttpLlmFunction<"3.0">, "parameters" | "separated"> {
+  extends Omit<IHttpLlmFunction<"3.0">, "parameters" | "separated" | "output"> {
   /**
    * List of parameter types.
    *
@@ -92,6 +92,13 @@ export interface IHttpOpenAiFunction
   parameters: IOpenAiSchema[];
 
   /**
+   * Expected return type.
+   *
+   * If the function returns nothing (`void`), then the output is `undefined`.
+   */
+  output?: IOpenAiSchema | undefined;
+
+  /**
    * Collection of separated parameters.
    *
    * Filled only when {@link IHttpOpenAiApplication.IOptions.separate} is configured.
@@ -99,8 +106,48 @@ export interface IHttpOpenAiFunction
   separated?: IHttpOpenAiFunction.ISeparated;
 }
 export namespace IHttpOpenAiFunction {
-  export interface IOptions extends IOpenAiSchema.IConfig {
+  export interface IOptions {
+    /**
+     * Separator function for the parameters.
+     *
+     * When composing parameter arguments through LLM function call,
+     * there can be a case that some parameters must be composed by human,
+     * or LLM cannot understand the parameter.
+     *
+     * For example, if the parameter type has configured
+     * {@link IOpenAiSchema.IString.contentMediaType} which indicates file
+     * uploading, it must be composed by human, not by LLM
+     * (Large Language Model).
+     *
+     * In that case, if you configure this property with a function that
+     * predicating whether the schema value must be composed by human or
+     * not, the parameters would be separated into two parts.
+     *
+     * - {@link IHttpOpenAiFunction.separated.llm}
+     * - {@link IHttpOpenAiFunction.separated.human}
+     *
+     * When writing the function, note that returning value `true` means
+     * to be a human composing the value, and `false` means to LLM
+     * composing the value. Also, when predicating the schema, it would
+     * better to utilize the {@link GeminiTypeChecker} like features.
+     *
+     * @param schema Schema to be separated.
+     * @returns Whether the schema value must be composed by human or not.
+     * @default null
+     */
     separate: null | ((schema: IOpenAiSchema) => boolean);
+
+    /**
+     * Whether to allow recursive types or not.
+     *
+     * If allow, then how many times to repeat the recursive types.
+     *
+     * By the way, if the model is "chatgpt", the recursive types are always
+     * allowed without any limitation, due to it supports the reference type.
+     *
+     * @default 3
+     */
+    recursive: false | number;
   }
 
   /**
