@@ -69,7 +69,7 @@ import { ISwaggerOperation } from "./ISwaggerOperation";
  * @author Samchon
  */
 export interface IHttpOpenAiApplication
-  extends Omit<IHttpLlmApplication<"3.0">, "functions"> {
+  extends Omit<IHttpLlmApplication<"3.0">, "functions" | "options"> {
   /**
    * List of function metadata.
    *
@@ -86,6 +86,14 @@ export interface IHttpOpenAiApplication
    * OpenAI function call schemas are based on OpenAPI 3.0.3.
    */
   openapi: "3.0.3";
+
+  /**
+   * Options for the application.
+   *
+   * Adjusted options when composing the application through
+   * {@link HttpOpenAi.application} function.
+   */
+  options: IHttpOpenAiApplication.IOptions;
 }
 export namespace IHttpOpenAiApplication {
   /**
@@ -96,5 +104,35 @@ export namespace IHttpOpenAiApplication {
   /**
    * Options for composing the LLM application.
    */
-  export type IOptions = IHttpLlmApplication.IOptions<"3.0">;
+  export interface IOptions extends IHttpLlmApplication.IOptions<"3.0"> {
+    /**
+     * Whether the parameters are keyworded or not.
+     *
+     * If this property value is `true`, length of the
+     * {@link IHttpOpenAiApplication.IFunction.parameters} is always 1, and type of
+     * the pararameter is always {@link IOpenAiSchema.IObject} type.
+     *
+     * Otherwise, the parameters would be multiple, and the sequence of the parameters
+     * are following below rules.
+     *
+     * ```typescript
+     * // KEYWORD TRUE
+     * {
+     *   ...pathParameters,
+     *   query,
+     *   body,
+     * }
+     *
+     * // KEYWORD FALSE
+     * [
+     *   ...pathParameters,
+     *   ...(query ? [query] : []),
+     *   ...(body ? [body] : []),
+     * ]
+     * ```
+     *
+     * @default false
+     */
+    keyword: boolean;
+  }
 }

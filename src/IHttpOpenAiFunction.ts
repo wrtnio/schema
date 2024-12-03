@@ -92,11 +92,6 @@ export interface IHttpOpenAiFunction
   parameters: IOpenAiSchema[];
 
   /**
-   * The keyworded parameters.
-   */
-  keyword?: IOpenAiSchema.IParameters;
-
-  /**
    * Collection of separated parameters.
    *
    * Filled only when {@link IHttpOpenAiApplication.IOptions.separate} is configured.
@@ -121,11 +116,6 @@ export namespace IHttpOpenAiFunction {
      * Parameters that would be composed by the human.
      */
     human: ISeparatedParameter[];
-
-    /**
-     * The keyworded parameters' separation.
-     */
-    keyword?: IHttpLlmFunction.ISeparated<"3.0">;
   }
 
   /**
