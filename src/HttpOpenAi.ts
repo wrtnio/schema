@@ -16,6 +16,9 @@ import { ISwaggerSchema } from "./ISwaggerSchema";
 import { HttpOpenAiFetcher } from "./internal/HttpOpenAiFetcher";
 import { HttpOpenAiSeparator } from "./internal/HttpOpenAiSeparator";
 
+/**
+ * @deprecated
+ */
 export namespace HttpOpenAi {
   /* -----------------------------------------------------------
     COMPOSERS
@@ -31,7 +34,13 @@ export namespace HttpOpenAi {
     });
     return {
       ...app,
-      functions: app.functions.map(functional),
+      functions: app.functions.map((f) =>
+        functional(f, props.options?.keyword ?? false),
+      ),
+      options: {
+        ...app.options,
+        keyword: props.options?.keyword ?? false,
+      },
       openapi: "3.0.3",
     };
   };
@@ -49,31 +58,51 @@ export namespace HttpOpenAi {
   };
 
   const functional = (
-    keyword: IHttpLlmFunction<"3.0">,
+    regular: IHttpLlmFunction<"3.0">,
+    keyword: boolean,
   ): IHttpOpenAiFunction => {
     const properties = new Map(
-      Object.keys(keyword.parameters.properties).map((name, i) => [name, i]),
+      Object.keys(regular.parameters.properties).map((name, i) => [name, i]),
     );
     return {
-      ...keyword,
-      keyword: keyword.parameters,
-      parameters: Object.values(keyword.parameters.properties),
-      separated: keyword.separated
-        ? {
-            llm: Object.entries(keyword.separated.llm?.properties ?? {}).map(
-              ([key, value]) => ({
+      ...regular,
+      parameters: keyword
+        ? [regular.parameters]
+        : Object.values(regular.parameters.properties),
+      separated: regular.separated
+        ? keyword
+          ? {
+              llm: regular.separated.llm
+                ? [
+                    {
+                      schema: regular.separated.llm,
+                      index: 0,
+                    },
+                  ]
+                : [],
+              human: regular.separated.human
+                ? [
+                    {
+                      schema: regular.separated.human,
+                      index: 0,
+                    },
+                  ]
+                : [],
+            }
+          : {
+              llm: Object.entries(regular.separated.llm?.properties ?? {}).map(
+                ([key, value]) => ({
+                  schema: value,
+                  index: properties.get(key) ?? 0,
+                }),
+              ),
+              human: Object.entries(
+                regular.separated.human?.properties ?? {},
+              ).map(([key, value]) => ({
                 schema: value,
                 index: properties.get(key) ?? 0,
-              }),
-            ),
-            human: Object.entries(
-              keyword.separated.human?.properties ?? {},
-            ).map(([key, value]) => ({
-              schema: value,
-              index: properties.get(key) ?? 0,
-            })),
-            keyword: keyword.separated,
-          }
+              })),
+            }
         : undefined,
     };
   };

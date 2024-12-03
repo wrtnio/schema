@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "outDir": "../bin",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@wrtnio/schema": ["../src/index.ts"],
+      "@wrtnio/schema/lib/*": ["../src/*"],
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typia/lib/transform" },
+      { "transform": "@nestia/core/lib/transform" },
+    ]
+  },
+  "include": ["../src", "../test"]
+}

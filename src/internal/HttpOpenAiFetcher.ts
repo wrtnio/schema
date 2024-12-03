@@ -22,6 +22,21 @@ export namespace HttpOpenAiFetcher {
     props: HttpOpenAi.IFetchProps,
   ): HttpMigration.IFetchProps => {
     const route: IHttpMigrateRoute = props.function.route();
+    if (props.application.options.keyword) {
+      const input: Record<string, any> = props.arguments[0] as Record<
+        string,
+        any
+      >;
+      return {
+        connection: props.connection,
+        route,
+        parameters: Object.fromEntries(
+          route.parameters.map((p) => [p.key, input[p.key]] as const),
+        ),
+        query: input.query,
+        body: input.body,
+      };
+    }
     const parameters: Array<unknown> = props.arguments.slice(
       0,
       route.parameters.length,
