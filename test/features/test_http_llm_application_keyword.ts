@@ -1,8 +1,9 @@
 import { TestValidator } from "@nestia/e2e";
-import { IHttpMigrateRoute, ILlmSchema, OpenApi } from "@samchon/openapi";
+import { IHttpMigrateRoute, OpenApi } from "@samchon/openapi";
 import {
   HttpOpenAi,
   IHttpOpenAiApplication,
+  IOpenAiSchema,
   OpenAiTypeChecker,
 } from "@wrtnio/schema";
 
@@ -25,7 +26,7 @@ export const test_http_llm_application_keyword = (): void => {
       ...(route.body ? ["body"] : []),
     ])(
       (() => {
-        const schema: ILlmSchema = func.parameters[0];
+        const schema: IOpenAiSchema = func.parameters[0];
         if (!OpenAiTypeChecker.isObject(schema)) return [];
         return Object.keys(schema.properties ?? {});
       })(),

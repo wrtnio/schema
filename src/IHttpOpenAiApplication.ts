@@ -19,11 +19,12 @@ import { ISwaggerOperation } from "./ISwaggerOperation";
  * {@link ISwaggerSchema.IReference} type, the operation would be failed and
  * pushed into the {@link IHttpOpenAiApplication.errors}. Otherwise not, the operation
  * would be successfully converted to {@link IHttpOpenAiFunction} and its type schemas
- * are downgraded to {@link OpenApiV3.IJsonSchema} and converted to {@link ILlmSchema}.
+ * are downgraded to {@link OpenApiV3.IJsonSchema} and converted to
+ * {@link IOpenAiSchema}.
  *
  * About the options, if you've configured {@link IHttpOpenAiApplication.options.keyword}
  * (as `true`), number of {@link IHttpOpenAiFunction.parameters} are always 1 and the first
- * parameter type is always {@link ILlmSchema.IObject}. Otherwise, the parameters would
+ * parameter type is always {@link IOpenAiSchema.IObject}. Otherwise, the parameters would
  * be multiple, and the sequence of the parameters are following below rules.
  *
  * - `pathParameters`: Path parameters of {@link IHttpMigrateRoute.parameters}
