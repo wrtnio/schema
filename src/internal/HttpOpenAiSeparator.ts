@@ -60,11 +60,6 @@ export namespace HttpOpenAiSeparator {
     (
       input: IOpenAiSchema.IObject,
     ): [IOpenAiSchema.IObject | null, IOpenAiSchema.IObject | null] => {
-      if (
-        !!input.additionalProperties ||
-        Object.keys(input.properties ?? {}).length === 0
-      )
-        return [input, null];
       const llm = {
         ...input,
         properties: {} as Record<string, IOpenAiSchema>,
@@ -77,6 +72,14 @@ export namespace HttpOpenAiSeparator {
         const [x, y] = schema(predicator)(value);
         if (x !== null) llm.properties[key] = x;
         if (y !== null) human.properties[key] = y;
+      }
+      if (
+        typeof input.additionalProperties === "object" &&
+        input.additionalProperties !== null
+      ) {
+        const [dx, dy] = schema(predicator)(input.additionalProperties);
+        llm.additionalProperties = dx ?? false;
+        human.additionalProperties = dy ?? false;
       }
       return [
         Object.keys(llm.properties).length === 0 ? null : shrinkRequired(llm),
