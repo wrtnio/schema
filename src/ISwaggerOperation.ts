@@ -22,6 +22,15 @@ declare module "@samchon/openapi" {
        * so that it can be called without any other APIs or not.
        */
       "x-wrtn-standalone"?: boolean;
+
+      /**
+       * Whether experimental or not.
+       *
+       * `x-wrtn-experimental` is a property means whether the target API is experimental
+       * so that it can be revealed in the production environment or not. In other words,
+       * if the property is `true`, the API is only available in the development environment.
+       */
+      "x-wrtn-experimental"?: boolean;
     }
   }
 }
