@@ -1,6 +1,6 @@
 {
   "name": "@wrtnio/schema",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "JSON and LLM function calling schemas extended for Wrtn Studio Pro",
   "main": "lib/index.js",
   "module": "./lib/index.mjs",
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/wrtnio/schema#readme",
   "dependencies": {
-    "@samchon/openapi": "^2.0.3"
+    "@samchon/openapi": "^2.0.4"
   },
   "devDependencies": {
     "@nestia/core": "^4.0.0",
