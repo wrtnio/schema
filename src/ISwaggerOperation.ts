@@ -31,6 +31,14 @@ declare module "@samchon/openapi" {
        * if the property is `true`, the API is only available in the development environment.
        */
       "x-wrtn-experimental"?: boolean;
+
+      /**
+       * List of keywords selecting the operation for benchmarks.
+       *
+       * `x-wrtn-function-select-benchmarks` is a property which means a list of keywords
+       * that may cause the LLM function calling selection to be benchmarked.
+       */
+      "x-wrtn-function-select-benchmarks"?: string[];
     }
   }
 }

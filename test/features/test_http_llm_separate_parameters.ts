@@ -10,7 +10,7 @@ export const test_http_llm_separate_parameters = async (): Promise<void> => {
     ).then((r) => r.json()),
   );
   for (const path of Object.keys(document.paths ?? {}))
-    if (path !== "/connector/notion/database-item/{databaseId}")
+    if (path !== "/connector/notion/page/bookmark")
       delete document.paths?.[path];
 
   const app = HttpOpenAi.application({
@@ -22,10 +22,8 @@ export const test_http_llm_separate_parameters = async (): Promise<void> => {
     },
   });
   const func = app.functions.find(
-    (f) =>
-      f.method === "post" &&
-      f.path === "/connector/notion/database-item/{databaseId}",
+    (f) => f.method === "post" && f.path === "/connector/notion/page/bookmark",
   );
   if (func === undefined) throw new Error("Function not found");
-  TestValidator.equals("human")(func.separated?.human.at(0)?.index)(1);
+  TestValidator.equals("human")(func.separated?.human.at(0)?.index)(0);
 };
